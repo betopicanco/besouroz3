@@ -1,24 +1,20 @@
-const data: any = [{
+import profile from './interface';
+
+const data: profile[] = [{
   id: 1,
-  name: 'betopicanco',
-  email: '',
-  password: '',
-  pic: '/img/profile_pic/betopicanco.jpg',
-  bio: 'Minha bio'
+  pic: "/img/profile_pic/betopicanco.jpg",
+  name: "betopicanco",
+  bio: "Minha Bio"
 }, {
   id: 2,
-  name: 'jbloficial',
-  email: '',
-  password: '',
-  pic: '/img/profile_pic/jbl-logo-2.png',
-  bio: 'Perfil oficial'
+  pic: "/img/profile_pic/jbl-logo-2.png",
+  name: "jbl_oficial",
+  bio: "O som lendário que acompanha seu ritmo!"
 }, {
   id: 3,
-  name: 'besouroz',
-  email: '',
-  password: '',
-  pic: '/img/profile_pic/logo_besouroz.jpg',
-  bio: 'A sessão exclusiva dos geeks!'
+  pic: "/img/profile_pic/logo_besouroz.jpg",
+  name: "besouroz",
+  bio: ''
 }];
 
 export default data;

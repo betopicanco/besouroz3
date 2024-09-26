@@ -1,5 +1,5 @@
 import Price from "../../Post/PostMenu/ProdutctArea/Price";
-import ProfileInfo from "../../Profile/ProfileInfo";
+import ProfileInfo from "../../Post/ProfileInfo";
 import Title from "../../Post/Title";
 import CartPicture from "./CartPicture";
 import Trash from "../../Icons/Trash";
@@ -7,7 +7,6 @@ import PostInterface from "../../Post/interface";
 import PostContext from "../../../Context/PostProvider";
 
 interface CartItemProps {
-  key: number,
   item: PostInterface
 }
 

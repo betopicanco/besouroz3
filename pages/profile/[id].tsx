@@ -2,45 +2,70 @@ import axios from "axios";
 import { GetStaticPropsContext } from "next";
 import DefaultBG from "../../components/DefaultBG";
 import Layout from "../../components/Layout";
-import Bio from "../../components/Profile/Bio";
+import ProfileProvider from "../../Context/ProfileProvider";
+import ProfileMain from "../../components/Profile";
+import BottomMenu from "../../components/BottomMenu";
+import profile from "../api/profile/interface";
+import PostInterface from "../../components/Post/interface";
 
 export async function getStaticPaths() {
   return {
     paths: [
-      {
-        params: {
-          id: '1'
-        }
-      }
+      { params: { id: '1' }, }, 
+      { params: { id: '2' }, },
+      { params: { id: '3' }, }
     ],
     fallback: 'blocking'
   }
 }
 
-export async function getStaticProps(context: GetStaticPropsContext) {
+export async function getStaticProps(
+  context: GetStaticPropsContext
+) {
   const id = context.params?.id;
-  const path = `https://socialcommerce.vercel.app/api/profile/${id}`;
-  const profile = await axios.get(path)
 
-  return {
-    props: {
-      profile: profile.data
-    }
+  const basePath = 'https://socialcommerce.vercel.app/api/profile/';
+  const profilePath = basePath + `${id}`;
+  const feedPath = basePath + `posts/${id}`;
+  const shopPath = basePath + `shop/${id}`;
+
+  const profile = await axios.get(profilePath);
+  const feed = await axios.get(feedPath);
+  const shop = await axios.get(shopPath);
+
+  return { 
+    props: { 
+      profile: profile.data,
+      feed: feed.data,
+      shop: shop.data
+    } 
   }
 }
 
-const Profile = (props: any) => {
-  const {profile} = props;
+interface ProfilePageProps {
+  profile: profile,
+  feed: PostInterface[],
+  shop: PostInterface[],
+}
 
+const ProfilePage = (props: ProfilePageProps) => {
+  const { feed, profile, shop } = props;
+  console.log(shop);
   return (
     <DefaultBG>
       <Layout>
-        <main>
-          <Bio profile={profile}/>
-        </main>
+        <ProfileProvider 
+          profile={profile} 
+          feed={feed}
+          shop={shop}>
+          <>
+            <ProfileMain/>
+            <BottomMenu/>
+          </>
+        </ProfileProvider>
       </Layout>
     </DefaultBG>
   );
 }
 
-export default Profile;
+export default ProfilePage;

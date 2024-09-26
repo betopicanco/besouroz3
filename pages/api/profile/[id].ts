@@ -1,28 +1,26 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import data from "./data";
-import ProfileInterface from "./interface";
+import data from './data';
 
-const filterProfile = (
-  profileList: ProfileInterface[], 
-  id: number
-): ProfileInterface => {
-  const [ profile ] = profileList.filter((prof) => {
-    return prof.id === id;
-  });
-
-  return profile;
+function throwProfileNotFound(): never {
+  throw `Perfil não encontrado`;
 }
 
-function handler(req: NextApiRequest, res: NextApiResponse) {
-  const profileList = data;
-  const id = +req.query.id;
-  const profile = filterProfile(profileList, id);
-
+function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+): void {
   try {
-    res.status(200).json(profile)
+    const id = Number(req.query.id);
+    if(isNaN(id)) throwProfileNotFound();
+    
+    const profiles = data;
+    const profile = profiles.find(prof => prof.id === id);
+    if(!profile) throwProfileNotFound();
+
+    res.status(200).json(profile);
   } catch(err) {
-    res.status(500).json({err: 'failed to load data'});
+    res.status(500).json({error: err});
   }
-}
+};
 
 export default handler;

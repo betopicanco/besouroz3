@@ -1,6 +1,5 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import PostContext from "../../../Context/PostProvider";
-import Statics from "../Statics";
 import ProfileName from "./ProfileName";
 import ProfilePic from "./ProfilePic";
 
@@ -15,7 +14,9 @@ const ProfileInfo = (props: ProfileInfoProps) => {
   return (
     <div className={`flex`}>
       <ProfilePic pic={profile.pic} size={picSize}/>
-      <ProfileName name={profile.name}/>
+      <ProfileName>
+        {profile.name}
+      </ProfileName>
     </div>
   );
 };

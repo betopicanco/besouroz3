@@ -1,10 +1,6 @@
-interface ProfileInterface {
-  id: number
-  name: string,
-  email: string,
-  password: string,
+export default interface profile{
+  id: number,
   pic: string,
+  name: string,
   bio: string
 }
-
-export default ProfileInterface;

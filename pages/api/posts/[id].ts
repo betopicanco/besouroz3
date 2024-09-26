@@ -1,24 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import data from './data';
-import PostInterface from '../../../components/Post/interface';
 
-const filterPost = (
-  feed: PostInterface[], 
-  id: number
-): PostInterface => {
-  const [ post ] = feed.filter((p) => { 
-    if(p.id === id) return p;
-  });
+type handlerFn = (req: NextApiRequest, res: NextApiResponse) => void;
 
-  return post;
-}
-
-function handler(req: NextApiRequest, res: NextApiResponse) {
+const handler: handlerFn = (req, res) => {
   const feed = data;
-  const id = +req.query.id;
+  const id = Number(req.query.id);
 
   try {
-    const post = filterPost(feed, id);
+    const post = feed.find((p) => p.id === id)
 
     res.status(200).json(post);
   } catch(err) {
